@@ -46,8 +46,8 @@ public class FractionatingColumn {
 		FeedforwardController feedforwardController = new FeedforwardController();
 		ControlSignal controlSignal;
 		List<FractionatingColumnOutput> output = new ArrayList<>();
-		double xd, xb;
 		int stepSize = (int) (1 / integrationParams.getDelta());
+		double xd, xb;
 
 		for (int t = 0; t < stepSize * time; t++) {
 			controlSignal = feedforwardController.control(input.get(t));

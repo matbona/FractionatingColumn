@@ -4,11 +4,39 @@ import pl.mateuszbona.fractionatingcolumn.utils.FractionatingColumnInput;
 
 public class FeedforwardController {
 
-	public ControlSignal control(FractionatingColumnInput input) {
-		/*
-		 * TODO: Should calculate control signal from input
-		 */
+	private double v = 1.0;
+	private double r = 1.0;
+	private boolean initV = true;
+	private boolean initR = true;
 
-		return new ControlSignal(113.8, 108.4);
+	public ControlSignal control(FractionatingColumnInput input) {
+		double f = input.getF();
+
+		v = calculateV(f);
+		r = calculateR(f);
+
+		return new ControlSignal(v, r);
+	}
+
+	private double calculateV(double f) {
+		if (initV) {
+			initV = false;
+		} else {
+			double v1 = 0.6485 * v + f;
+			v = v1;
+		}
+
+		return v;
+	}
+
+	private double calculateR(double f) {
+		if (initR) {
+			initR = false;
+		} else {
+			double r1 = -0.048 * r + 2.8393 * f;
+			r = r1;
+		}
+
+		return r;
 	}
 }
